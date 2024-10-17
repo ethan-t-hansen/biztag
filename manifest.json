@@ -1,5 +1,5 @@
 {
-  "name": "BizTag - Autogenerate Name Tags",
+  "name": "NTGen - Autogenerate Name Tags for Event Partners",
   "id": "00000000",
   "api": "1.0.0",
   "main": "dist/code.js",
