@@ -32,6 +32,10 @@ where the .json file should be formatted as a single PartnerList object.
 
 https://github.com/user-attachments/assets/8a5935e5-8d2e-46f9-b739-cdb6e18b56f7
 
+## Credits
+
+Plugin compatibility with React by [figma-plugin-react-template](https://github.com/nirsky/figma-plugin-react-template).
+
 ## Notes
 
 This project was made for [UBC BizTech](https://www.ubcbiztech.com/) by myself, a 2024/25 Design Director.
