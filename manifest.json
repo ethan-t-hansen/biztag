@@ -6,7 +6,9 @@
   "ui": "dist/ui.html",
   "editorType": ["figma", "figjam"],
   "networkAccess": { 
-    "allowedDomains": ["none"]
+    "allowedDomains": ["https://api.qrserver.com"],
+    "reasoning": "",
+    "devAllowedDomains": []
   },
   "documentAccess": "dynamic-page"
 }

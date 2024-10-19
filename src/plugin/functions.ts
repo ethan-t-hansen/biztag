@@ -25,24 +25,56 @@ const createTextElement = (content: string, size: number, style: string) => {
   return text;
 };
 
-async function fillFrameWithImageFromURL(frame: FrameNode, imageUrl: string) {
-  // Fetch the image from the URL
-  const imageResponse = await fetch(imageUrl);
-  const imageArrayBuffer = await imageResponse.arrayBuffer();
+function base64ToUint8Array(base64: string): Uint8Array {
+  const base64WithoutPrefix = base64.split(',')[1];
 
-  // Create a new Figma image using the array buffer
-  const image = figma.createImage(new Uint8Array(imageArrayBuffer));
+  // Decode base64 manually
+  const chars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/';
+  const bufferLength = Math.floor((base64WithoutPrefix.length * 3) / 4) - (base64WithoutPrefix.endsWith('==') ? 2 : base64WithoutPrefix.endsWith('=') ? 1 : 0);
+  const bytes = new Uint8Array(bufferLength);
 
-  // Create an image fill
-  const imageFill: ImagePaint = {
-    type: 'IMAGE',
-    scaleMode: 'FILL',
-    imageHash: image.hash,
-  };
+  for (let i = 0, p = 0; i < base64WithoutPrefix.length; i += 4) {
+    const encoded1 = chars.indexOf(base64WithoutPrefix.charAt(i));
+    const encoded2 = chars.indexOf(base64WithoutPrefix.charAt(i + 1));
+    const encoded3 = chars.indexOf(base64WithoutPrefix.charAt(i + 2));
+    const encoded4 = chars.indexOf(base64WithoutPrefix.charAt(i + 3));
 
-  // Set the fills property of the frame to the image fill
-  frame.fills = [imageFill];
+    const buffer = (encoded1 << 18) | (encoded2 << 12) | (encoded3 << 6) | encoded4;
+
+    if (p < bufferLength) bytes[p++] = (buffer >> 16) & 0xFF;
+    if (p < bufferLength) bytes[p++] = (buffer >> 8) & 0xFF;
+    if (p < bufferLength) bytes[p++] = buffer & 0xFF;
+  }
+
+  return bytes;
 }
+
+async function fillFrameWithImage(frame: FrameNode, base64ImageData: string) {
+  try {
+    // Step 1: Convert base64 to Uint8Array
+    const uint8Array = base64ToUint8Array(base64ImageData);
+
+    // Step 2: Create an image in Figma using the Uint8Array
+    const image = figma.createImage(uint8Array);
+
+    // Step 3: Apply the image fill to the frame
+    frame.fills = [{
+      type: 'IMAGE',
+      imageHash: image.hash, // Apply the image hash
+      scaleMode: 'FILL' // Set how the image should fill the frame
+    }];
+
+    console.log('Image applied to frame successfully!');
+  } catch (error) {
+    console.error('Error applying image to frame:', error);
+  }
+}
+
+
+
+
+
+
 
 async function appendQRToFrame(frame: FrameNode, qrUrl: string) {
   const qr = figma.createRectangle();
@@ -69,6 +101,8 @@ async function appendQRToFrame(frame: FrameNode, qrUrl: string) {
       }
     ];
 
+    qr.name = "QR Code"
+
     // Append the frame to the current page
     frame.appendChild(qr);
 
@@ -88,4 +122,4 @@ function generateFrame(width: number, height: number, gap: number) {
   return frame;
 }
 
-export { loadFonts, createTextElement, fillFrameWithImageFromURL, generateFrame, appendQRToFrame };
+export { loadFonts, createTextElement, fillFrameWithImage, generateFrame, appendQRToFrame };
