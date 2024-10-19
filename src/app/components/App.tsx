@@ -84,7 +84,7 @@ function App() {
   return (
     <div className="container">
       <img src={logo} className="logo" alt="Logo" />
-      <h2 className="title">Name Tag Generator</h2>
+      <h2 className="title">BizTag - Name Tag Generator</h2>
       <h3 className="subtitle">By @ethan-t-hansen</h3>
 
       <p>

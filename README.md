@@ -4,9 +4,9 @@ Conferences, case comps, and hackathons make up the highlights of many student's
 
 Do you know whats not fun about these events? **Designing nametags**. See, professional delegates always wear nametags telling you who they are, what company they're from, and why they're there. These don't appear out of thin air - designers and marketing students alike are the force behind these designs and let me tell you - it can take **hours** to compile all of these designs together. But what if they could do it all at the click of a button?
 
-## Meet NTGen
+## Meet BizTag
 
-NTGen is a powerful Figma plugin that is built by a designer, for designers. The app communicates with [Figma's Plugin API](https://www.figma.com/plugin-docs/api/api-reference/) to build a series of clean, customizable, and organized name tags.
+BizTag is a powerful Figma plugin that is built by a designer, for designers. The app communicates with [Figma's Plugin API](https://www.figma.com/plugin-docs/api/api-reference/) to build a series of clean, customizable, and organized name tags.
 
 All it takes is a background image with a resolution of your choosing, and a .json file populated with information on your event partners, and you can complete 2 hours worth of work with a single click. The plugin automatically places name, company, and pronouns on the frontside, and generates a QR code using the [QR code api](https://goqr.me/api/) to place on the backside.
 
