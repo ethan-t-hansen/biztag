@@ -29,7 +29,7 @@ const TEST_OBJECT: DelegatesList = [
 // ------------------------------------------------------------------------------------------------------------------------------------------
 
 figma.showUI(__html__);
-figma.ui.resize(400, 660);
+figma.ui.resize(460, 680);
 
 figma.ui.onmessage = async (msg: { type: string; image: string; json: DelegatesList; width: number; height: number }) => {
 
@@ -113,6 +113,7 @@ figma.ui.onmessage = async (msg: { type: string; image: string; json: DelegatesL
 
       figma.currentPage.selection = nodes;
       figma.viewport.scrollAndZoomIntoView(nodes);
+      figma.closePlugin();
 
     });
 
